@@ -168,6 +168,30 @@ class PictureLayer extends Layer {
   }
 }
 
+/// A composited layer containing a texture.
+///
+/// Texture layers are always leaves in the layer tree.
+class TextureLayer extends Layer {
+  TextureLayer({
+    @required this.textureRect,
+    @required this.textureId,
+  });
+
+  Rect textureRect;
+  int textureId;
+
+  @override
+  void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
+    final Rect shiftedRect = textureRect.shift(layerOffset);
+    builder.addTexture(
+      textureId: textureId,
+      offset: shiftedRect.topLeft,
+      width: shiftedRect.width,
+      height: shiftedRect.height,
+    );
+  }
+}
+
 /// A layer that indicates to the compositor that it should display
 /// certain performance statistics within it.
 ///
