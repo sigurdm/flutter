@@ -184,7 +184,7 @@ class TextureLayer extends Layer {
   void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
     final Rect shiftedRect = textureRect.shift(layerOffset);
     builder.addTexture(
-      textureId: textureId,
+      textureId,
       offset: shiftedRect.topLeft,
       width: shiftedRect.width,
       height: shiftedRect.height,
