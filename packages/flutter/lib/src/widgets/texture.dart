@@ -7,31 +7,30 @@ import 'package:flutter/foundation.dart';
 import 'framework.dart';
 import 'transitions.dart';
 
-/// A [Widget] that is backed by an external image stream.
-class ExternalImage extends LeafRenderObjectWidget {
-  const ExternalImage({
-    @required this.imageId,
+class Texture extends LeafRenderObjectWidget {
+  const Texture({
+    @required this.textureId,
   });
 
-  final int imageId;
+  final int textureId;
 
   @override
-  ExternalImageBox createRenderObject(BuildContext context) => new ExternalImageBox(
-    imageId: imageId,
+  TextureBox createRenderObject(BuildContext context) => new TextureBox(
+    textureId: textureId,
   );
 
   @override
-  void updateRenderObject(BuildContext context, ExternalImageBox renderObject) {
-    renderObject.textureId = imageId;
+  void updateRenderObject(BuildContext context, TextureBox renderObject) {
+    renderObject.textureId = textureId;
   }
 }
 
 class AnimatedTexture extends AnimatedWidget {
 
-  AnimatedTexture(Listenable listenable) : super(listenable: listenable);
+  AnimatedTexture(Listenable listenable) : super(listenable);
 
   @override
   Widget build(BuildContext context) {
-    return const ExternalImage(imageId: 0);
+    return const Texture(textureId: 0);
   }
 }

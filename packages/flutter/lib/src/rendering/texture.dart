@@ -28,6 +28,10 @@ class TextureBox extends RenderBox {
   @override
   bool get alwaysNeedsCompositing => true;
 
+
+  @override
+  bool get isRepaintBoundary => true;
+
   @override
   void performResize() {
     size = constraints.biggest;

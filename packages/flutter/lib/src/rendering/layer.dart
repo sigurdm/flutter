@@ -171,20 +171,20 @@ class PictureLayer extends Layer {
 /// A composited layer containing a texture.
 ///
 /// Texture layers are always leaves in the layer tree.
-class ExternalImageLayer extends Layer {
-  ExternalImageLayer({
-    @required this.rect,
-    @required this.imageId,
+class TextureLayer extends Layer {
+  TextureLayer({
+    @required this.textureRect,
+    @required this.textureId,
   });
 
-  Rect rect;
-  int imageId;
+  Rect textureRect;
+  int textureId;
 
   @override
   void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
-    final Rect shiftedRect = rect.shift(layerOffset);
-    builder.addExternalImage(
-      imageId,
+    final Rect shiftedRect = textureRect.shift(layerOffset);
+    builder.addTexture(
+      textureId,
       offset: shiftedRect.topLeft,
       width: shiftedRect.width,
       height: shiftedRect.height,
