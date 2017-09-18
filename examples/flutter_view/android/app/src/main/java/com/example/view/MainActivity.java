@@ -1,6 +1,7 @@
 package com.example.view;
 
 import android.content.Intent;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         flutterView = (FlutterView) findViewById(R.id.flutter_view);
         flutterView.runFromBundle(FlutterMain.findAppBundlePath(getApplicationContext()), null);
+
+
 
         messageChannel = new BasicMessageChannel<>(flutterView, CHANNEL, StringCodec.INSTANCE);
         messageChannel.
