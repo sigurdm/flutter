@@ -6,21 +6,21 @@ import 'box.dart';
 import 'layer.dart';
 import 'object.dart';
 
-class TextureBox extends RenderBox {
-  TextureBox({
-    int textureId: null,
-  }) : _textureId = textureId;
+class ExternalImageBox extends RenderBox {
+  ExternalImageBox({
+    int imageId: null,
+  }) : _imageId = imageId;
 
-  int _textureId;
+  int _imageId;
 
   set textureId(int value) {
-    if (value != _textureId) {
-      _textureId = value;
+    if (value != _imageId) {
+      _imageId = value;
       markNeedsPaint();
     }
   }
 
-  int get textureId => _textureId;
+  int get textureId => _imageId;
 
   @override
   bool get sizedByParent => true;
@@ -40,12 +40,12 @@ class TextureBox extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     assert(needsCompositing);
-    if (_textureId == null) {
+    if (_imageId == null) {
       return;
     }
-    context.addLayer(new TextureLayer(
-      textureRect: new Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
-      textureId: _textureId,
+    context.addLayer(new ExternalImageLayer(
+      rect: new Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
+      imageId: _imageId,
     ));
   }
 }
