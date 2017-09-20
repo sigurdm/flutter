@@ -182,7 +182,6 @@ class ExternalImageLayer extends Layer {
 
   @override
   void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
-    print('Adding external image layer to scene');
     final Rect shiftedRect = rect.shift(layerOffset);
     builder.addExternalImage(
       imageId,
