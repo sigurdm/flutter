@@ -168,9 +168,9 @@ class PictureLayer extends Layer {
   }
 }
 
-/// A composited layer containing a texture.
+/// A composited layer backed by an external image stream.
 ///
-/// Texture layers are always leaves in the layer tree.
+/// External image layers are always leaves in the layer tree.
 class ExternalImageLayer extends Layer {
   ExternalImageLayer({
     @required this.rect,
@@ -182,6 +182,7 @@ class ExternalImageLayer extends Layer {
 
   @override
   void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
+    print('Adding external image layer to scene');
     final Rect shiftedRect = rect.shift(layerOffset);
     builder.addExternalImage(
       imageId,
