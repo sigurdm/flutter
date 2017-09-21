@@ -6,28 +6,26 @@ import 'box.dart';
 import 'layer.dart';
 import 'object.dart';
 
+/// A [RenderBox] that is backed by an external image stream.
 class ExternalImageBox extends RenderBox {
-  ExternalImageBox({
-    int imageId: null,
-  }) : _imageId = imageId;
+  ExternalImageBox({ int imageId: null }) : _imageId = imageId;
 
   int _imageId;
 
-  set textureId(int value) {
+  set imageId(int value) {
     if (value != _imageId) {
       _imageId = value;
       markNeedsPaint();
     }
   }
 
-  int get textureId => _imageId;
+  int get imageId => _imageId;
 
   @override
   bool get sizedByParent => true;
 
   @override
   bool get alwaysNeedsCompositing => true;
-
 
   @override
   bool get isRepaintBoundary => true;
@@ -39,7 +37,6 @@ class ExternalImageBox extends RenderBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    assert(needsCompositing);
     if (_imageId == null) {
       return;
     }
