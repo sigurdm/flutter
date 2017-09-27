@@ -168,23 +168,23 @@ class PictureLayer extends Layer {
   }
 }
 
-/// A composited layer backed by an external image stream.
+/// A composited layer backed by a platform surface.
 ///
-/// External image layers are always leaves in the layer tree.
-class ExternalImageLayer extends Layer {
-  ExternalImageLayer({
+/// Platform surface layers are always leaves in the layer tree.
+class PlatformSurfaceLayer extends Layer {
+  PlatformSurfaceLayer({
     @required this.rect,
-    @required this.imageId,
+    @required this.surfaceId,
   });
 
   Rect rect;
-  int imageId;
+  int surfaceId;
 
   @override
   void addToScene(ui.SceneBuilder builder, Offset layerOffset) {
     final Rect shiftedRect = rect.shift(layerOffset);
-    builder.addExternalImage(
-      imageId,
+    builder.addPlatformSurface(
+      surfaceId,
       offset: shiftedRect.topLeft,
       width: shiftedRect.width,
       height: shiftedRect.height,

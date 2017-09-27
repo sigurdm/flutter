@@ -6,20 +6,20 @@ import 'box.dart';
 import 'layer.dart';
 import 'object.dart';
 
-/// A [RenderBox] that is backed by an external image stream.
-class ExternalImageBox extends RenderBox {
-  ExternalImageBox({ int imageId: null }) : _imageId = imageId;
+/// A [RenderBox] backed by a platform surface.
+class PlatformSurfaceBox extends RenderBox {
+  PlatformSurfaceBox({ int surfaceId }) : _surfaceId = surfaceId;
 
-  int _imageId;
+  int _surfaceId;
 
-  set imageId(int value) {
-    if (value != _imageId) {
-      _imageId = value;
+  set surfaceId(int value) {
+    if (value != _surfaceId) {
+      _surfaceId = value;
       markNeedsPaint();
     }
   }
 
-  int get imageId => _imageId;
+  int get surfaceId => _surfaceId;
 
   @override
   bool get sizedByParent => true;
@@ -43,12 +43,12 @@ class ExternalImageBox extends RenderBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    if (_imageId == null) {
+    if (_surfaceId == null) {
       return;
     }
-    context.addLayer(new ExternalImageLayer(
+    context.addLayer(new PlatformSurfaceLayer(
       rect: new Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
-      imageId: _imageId,
+      surfaceId: _surfaceId,
     ));
   }
 }
