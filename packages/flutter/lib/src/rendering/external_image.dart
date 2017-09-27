@@ -35,6 +35,12 @@ class ExternalImageBox extends RenderBox {
     size = constraints.biggest;
   }
 
+
+  @override
+  bool hitTestSelf(Offset position) {
+    return true;
+  }
+
   @override
   void paint(PaintingContext context, Offset offset) {
     if (_imageId == null) {
