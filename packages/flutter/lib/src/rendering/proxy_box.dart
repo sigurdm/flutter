@@ -1594,6 +1594,23 @@ class RenderPhysicalModel extends _RenderPhysicalModelBase<RRect> {
           elevation: elevation,
           color: color,
         );
+        final Canvas canvas = context.canvas;
+        if (elevation != 0.0) {
+          // The drawShadow call doesn't add the region of the shadow to the
+          // picture's bounds, so we draw a hardcoded amount of extra space to
+          // account for the maximum potential area of the shadow.
+          // TODO(jsimmons): remove this when Skia does it for us.
+          canvas.drawRect(
+            offsetBounds.inflate(20.0),
+            _RenderPhysicalModelBase._transparentPaint,
+          );
+          canvas.drawShadow(
+            offsetClipPath,
+            shadowColor,
+            elevation,
+            color.alpha != 0xFF,
+          );
+        }
         context.pushLayer(physicalModel, super.paint, offset, childPaintBounds: offsetBounds);
       } else {
         final Canvas canvas = context.canvas;
@@ -1700,6 +1717,24 @@ class RenderPhysicalShape extends _RenderPhysicalModelBase<Path> {
           elevation: elevation,
           color: color,
         );
+        if (elevation != 0.0) {
+          final Canvas canvas = context.canvas;
+
+          // The drawShadow call doesn't add the region of the shadow to the
+          // picture's bounds, so we draw a hardcoded amount of extra space to
+          // account for the maximum potential area of the shadow.
+          // TODO(jsimmons): remove this when Skia does it for us.
+          canvas.drawRect(
+            offsetBounds.inflate(20.0),
+            _RenderPhysicalModelBase._transparentPaint,
+          );
+          canvas.drawShadow(
+            offsetPath,
+            shadowColor,
+            elevation,
+            color.alpha != 0xFF,
+          );
+        }
         context.pushLayer(physicalModel, super.paint, offset, childPaintBounds: offsetBounds);
       } else {
         final Canvas canvas = context.canvas;
