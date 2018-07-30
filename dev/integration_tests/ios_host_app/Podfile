@@ -1,0 +1,12 @@
+target 'ios_host_app' do
+    flutter_application_path = /"(.*)\/.ios\/Flutter\/Generated.xcconfig"/.match(File.read("./Flutter/FlutterConfig.xcconfig"))[1]
+    eval(File.read(File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper.rb')))
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['ENABLE_BITCODE'] = 'NO'
+        end
+    end
+end

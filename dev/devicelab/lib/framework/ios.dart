@@ -20,15 +20,24 @@ const FileSystem _fs = const io.LocalFileSystem();
 /// FLUTTER_DEVICELAB_XCODE_PROVISIONING_CONFIG is set. If it is not set,
 /// we rely on automatic signing by Xcode.
 Future<Null> prepareProvisioningCertificates(String flutterProjectPath) async {
+  await _patchXcconfigFilesIfNotPatched(flutterProjectPath);
+  writeProvisioningCertificatesToXcConfig(path.join(flutterProjectPath, 'ios/Flutter/$_kTestXcconfigFileName'));
+}
+
+/// Patches the given xcconfig file adding provisioning certificates and team
+/// information required to build and run the including app.
+///
+/// If you have a general Flutter project consider using
+/// [prepareProvisioningCertificates].
+Future<Null> writeProvisioningCertificatesToXcConfig(String xcConfigPath) async {
   final String certificateConfig = await _readProvisioningConfigFile();
   if (certificateConfig == null) {
     // No cert config available, rely on automatic signing by Xcode.
     return;
   }
 
-  await _patchXcconfigFilesIfNotPatched(flutterProjectPath);
-  final File testXcconfig = _fs.file(path.join(flutterProjectPath, 'ios/Flutter/$_kTestXcconfigFileName'));
-  await testXcconfig.writeAsString(certificateConfig);
+  final File xcConfig = _fs.file(xcConfigPath);
+  await xcConfig.writeAsString(certificateConfig);
 }
 
 Future<Null> runPodInstallForCustomPodfile(String flutterProjectPath) async {
